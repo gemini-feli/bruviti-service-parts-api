@@ -112,8 +112,14 @@ def test_missing_part_returns_404(client, url):
     assert client.get(url).status_code == 404
 
 
+
 def test_homepage(client):
     response = client.get("/")
 
     assert response.status_code == 200
-    assert "Arcadia" in response.text
+    assert "Arcadia Service Parts Catalogue" in response.text
+    assert 'id="lookupForm"' in response.text
+    assert 'data-mode="validation"' in response.text
+    assert 'data-mode="part"' in response.text
+    assert 'data-mode="paths"' in response.text
+    assert 'data-mode="serial"' in response.text

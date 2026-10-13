@@ -1,0 +1,588 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Arcadia | Service Parts Catalogue</title>
+
+<style>
+:root {
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    color: #17263c;
+    background: #f4f7fb;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+
+header {
+    background: #152843;
+    color: white;
+    padding: 25px 6%;
+}
+
+header h1 {
+    margin: 0 0 7px;
+    font-size: 26px;
+}
+
+header p {
+    margin: 0;
+    color: #c5d5e7;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 1180px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+.intro {
+    margin-bottom: 25px;
+}
+
+.intro h2 {
+    margin-bottom: 8px;
+}
+
+.intro p {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 330px minmax(0, 1fr);
+    gap: 22px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 23px;
+    box-shadow: 0 4px 20px #1a345208;
+}
+
+.card h3 {
+    margin: 0 0 20px;
+}
+
+.mode {
+    display: block;
+    width: 100%;
+    padding: 13px 15px;
+    margin-bottom: 10px;
+    border-radius: 9px;
+    border: 1px solid #dae2ed;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #263a54;
+}
+
+.mode:hover {
+    background: #f2f6fd;
+}
+
+.mode.active {
+    background: #e9f1ff;
+    color: #1659b7;
+    border-color: #92bbf6;
+    font-weight: 600;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin: 18px 0 9px;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 14px;
+}
+
+input:focus {
+    outline: 2px solid #b0ceff;
+    border-color: #2563eb;
+}
+
+.primary {
+    background: #2563eb;
+    border: none;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 13px;
+    width: 100%;
+    margin-top: 17px;
+    font-size: 14px;
+}
+
+.primary:hover {
+    background: #1d4ed8;
+}
+
+.primary:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.hint {
+    font-size: 12px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 17px;
+}
+
+.result-header h3 {
+    margin: 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 11px;
+    background: #e9f8f0;
+    color: #137a48;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge.error {
+    background: #fff0f0;
+    color: #b42318;
+}
+
+.summary {
+    padding: 16px;
+    background: #f4f7fc;
+    border: 1px solid #e3eaf5;
+    border-radius: 9px;
+    margin-bottom: 18px;
+    line-height: 1.6;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+pre {
+    margin: 0;
+    background: #101e32;
+    color: #dceafa;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: auto;
+    max-height: 520px;
+    font-size: 13px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.copy {
+    background: transparent;
+    color: #2563eb;
+    border: 1px solid #cbd5e1;
+    border-radius: 7px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.endpoint {
+    margin-top: 13px;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    color: #64748b;
+    overflow-wrap: anywhere;
+}
+
+footer {
+    text-align: center;
+    padding: 32px 15px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+footer a {
+    color: #2563eb;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 750px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Arcadia Service Parts Catalogue</h1>
+    <p>
+        AM-700 Machine | Parts Identification &
+        Service Compatibility
+    </p>
+</header>
+
+<main class="container">
+
+<section class="intro">
+    <h2>Machine Parts Explorer</h2>
+    <p>
+        Explore machine components, locate assembly paths,
+        validate catalogue records, and verify serial
+        compatibility using reconciled engineering data.
+    </p>
+</section>
+
+<div class="layout">
+
+    <section class="card">
+        <h3>Catalogue Operations</h3>
+
+        <button type="button" class="mode active"
+                data-mode="validation">
+            Catalogue Validation
+        </button>
+
+        <button type="button" class="mode"
+                data-mode="part">
+            Part Information
+        </button>
+
+        <button type="button" class="mode"
+                data-mode="paths">
+            Assembly Paths
+        </button>
+
+        <button type="button" class="mode"
+                data-mode="serial">
+            Serial Compatibility
+        </button>
+
+        <form id="lookupForm">
+
+            <div id="inputGroup" hidden>
+                <label for="queryInput" id="inputLabel">
+                    Enter value
+                </label>
+
+                <input
+                    id="queryInput"
+                    autocomplete="off"
+                    placeholder="Enter part number"
+                >
+            </div>
+
+            <button type="submit"
+                    class="primary"
+                    id="runButton">
+                Run Query
+            </button>
+
+        </form>
+
+        <p class="hint" id="operationHint">
+            Overview of all parts included in the machine.
+        </p>
+
+        <div class="endpoint" id="endpointLabel"></div>
+
+    </section>
+
+    <section class="card">
+
+        <div class="result-header">
+            <h3>API Response</h3>
+
+            <div>
+                <span class="badge" id="statusBadge">
+                    Ready
+                </span>
+
+                <button type="button"
+                        class="copy"
+                        id="copyButton">
+                    Copy JSON
+                </button>
+            </div>
+        </div>
+
+        <div class="summary"
+             id="resultSummary"
+             aria-live="polite">
+            Select an operation to view results.
+        </div>
+
+        <pre id="resultCode"
+             aria-live="polite">Waiting for response...</pre>
+
+    </section>
+
+</div>
+</main>
+
+<footer>
+    Arcadia AM-700 | Service Parts Catalogue API
+    <p>
+        <a href="/docs">Interactive API Documentation</a>
+        &nbsp;|&nbsp;
+        <a href="/health">Health Check</a>
+    </p>
+</footer>
+
+<script>
+const modes = {
+    validation: {
+        value: "",
+        label: "",
+        hint: "Counts ready, missing, and non-replaceable parts."
+    },
+    part: {
+        value: "AS-40003",
+        label: "Part number",
+        hint: "Returns part details, quantities, parents and children."
+    },
+    paths: {
+        value: "FA-30012",
+        label: "Part number",
+        hint: "Returns all sorted assembly paths from the machine root."
+    },
+    serial: {
+        value: "2500",
+        label: "Machine serial number",
+        hint: "Counts ready parts compatible with the given serial."
+    }
+};
+
+let selectedMode = "validation";
+let requestVersion = 0;
+
+const input = document.getElementById("queryInput");
+const inputGroup = document.getElementById("inputGroup");
+const inputLabel = document.getElementById("inputLabel");
+const hint = document.getElementById("operationHint");
+const endpointLabel = document.getElementById("endpointLabel");
+
+const resultCode = document.getElementById("resultCode");
+const resultSummary = document.getElementById("resultSummary");
+const statusBadge = document.getElementById("statusBadge");
+const runButton = document.getElementById("runButton");
+
+
+function makeEndpoint(mode, value) {
+    if (mode === "validation") {
+        return "/api/validation";
+    }
+
+    if (!value.trim()) {
+        throw new Error("Please enter a value.");
+    }
+
+    if (mode === "serial") {
+        if (!/^[0-9]+$/.test(value.trim())) {
+            throw new Error(
+                "Serial number must be a non-negative whole number."
+            );
+        }
+
+        return "/api/serial/" + encodeURIComponent(value.trim());
+    }
+
+    const part = encodeURIComponent(value.trim());
+
+    if (mode === "paths") {
+        return "/api/parts/" + part + "/paths";
+    }
+
+    return "/api/parts/" + part;
+}
+
+
+function describeResult(mode, data) {
+    if (mode === "validation") {
+        return (
+            "Machine catalogue: " + data.parts + " parts. " +
+            data.ready + " ready, " +
+            data.missing + " missing, and " +
+            data.not_replaceable + " not replaceable."
+        );
+    }
+
+    if (mode === "part") {
+        return (
+            "Part: " + data.part_number +
+            " | Status: " + data.status +
+            " | Total quantity: " + data.total_quantity +
+            " | Parents: " + data.parents.length +
+            " | Children: " + data.children.length
+        );
+    }
+
+    if (mode === "paths") {
+        return (
+            data.part_number + " has " +
+            data.paths.length +
+            " assembly path(s) from the machine root."
+        );
+    }
+
+    return (
+        data.applicable_parts +
+        " ready parts are applicable to machine serial " +
+        data.serial + "."
+    );
+}
+
+
+function showError(message) {
+    statusBadge.textContent = "Error";
+    statusBadge.classList.add("error");
+    resultSummary.textContent = message;
+
+    resultCode.textContent = JSON.stringify(
+        { error: message },
+        null,
+        2
+    );
+}
+
+
+async function runQuery() {
+    const mode = selectedMode;
+    const value = input.value;
+    const version = ++requestVersion;
+
+    let endpoint;
+
+    try {
+        endpoint = makeEndpoint(mode, value);
+    } catch (error) {
+        showError(error.message);
+        return;
+    }
+
+    endpointLabel.textContent = "GET " + endpoint;
+
+    statusBadge.textContent = "Loading";
+    statusBadge.classList.remove("error");
+    resultSummary.textContent = "Fetching catalogue information...";
+    resultCode.textContent = "Loading...";
+    runButton.disabled = true;
+
+    try {
+        const response = await fetch(endpoint, {
+            headers: { "Accept": "application/json" }
+        });
+
+        const data = await response.json();
+
+        if (version !== requestVersion) {
+            return;
+        }
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail || "Request failed"
+            );
+        }
+
+        resultSummary.textContent = describeResult(mode, data);
+        resultCode.textContent = JSON.stringify(data, null, 2);
+        statusBadge.textContent = "HTTP " + response.status;
+
+    } catch (error) {
+        if (version === requestVersion) {
+            showError(error.message);
+        }
+    } finally {
+        if (version === requestVersion) {
+            runButton.disabled = false;
+        }
+    }
+}
+
+
+function selectMode(mode) {
+    selectedMode = mode;
+
+    document.querySelectorAll("[data-mode]").forEach(button => {
+        const active = button.dataset.mode === mode;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+    });
+
+    input.value = modes[mode].value;
+    inputLabel.textContent = modes[mode].label;
+    inputGroup.hidden = mode === "validation";
+    hint.textContent = modes[mode].hint;
+
+    runQuery();
+}
+
+
+document.querySelectorAll("[data-mode]").forEach(button => {
+    button.addEventListener("click", () => {
+        selectMode(button.dataset.mode);
+    });
+});
+
+
+document.getElementById("lookupForm")
+    .addEventListener("submit", event => {
+        event.preventDefault();
+        runQuery();
+    });
+
+
+document.getElementById("copyButton")
+    .addEventListener("click", async () => {
+        try {
+            await navigator.clipboard.writeText(
+                resultCode.textContent
+            );
+        } catch (error) {
+            console.error("Could not copy response:", error);
+        }
+    });
+
+
+// Load the validation summary when the page opens.
+selectMode("validation");
+</script>
+
+</body>
+</html>
