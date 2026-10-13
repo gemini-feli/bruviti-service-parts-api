@@ -183,6 +183,12 @@ def load_data(data_dir=None):
             )
             replaceable = "N"
 
+        
+        # Keep the replaceability flag even when serial data is invalid.
+        # Invalid ranges must never be treated as unrestricted.
+
+        serial_valid = True
+
         try:
             serial_from = parse_optional_serial(
                 row["serial_from"], "service_parts.csv", row_num
@@ -190,12 +196,16 @@ def load_data(data_dir=None):
             serial_to = parse_optional_serial(
                 row["serial_to"], "service_parts.csv", row_num
             )
+
         except ValueError as exc:
             problems.append(str(exc))
-            continue
+            serial_valid = False
+            serial_from = None
+            serial_to = None
 
         if (
-            serial_from is not None
+            serial_valid
+            and serial_from is not None
             and serial_to is not None
             and serial_from > serial_to
         ):
@@ -203,13 +213,19 @@ def load_data(data_dir=None):
                 f"service_parts.csv row {row_num}: "
                 "reversed serial bounds"
             )
-            continue
+            serial_valid = False
 
         record = {
             "field_replaceable": replaceable,
             "serial_from": serial_from,
             "serial_to": serial_to
         }
+
+        # Only malformed records need the additional marker.
+        # Existing valid-record structure remains unchanged.
+        if not serial_valid:
+            record["serial_valid"] = False
+
 
         if record not in service[part]:
             service[part].append(record)

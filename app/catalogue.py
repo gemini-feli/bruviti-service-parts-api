@@ -281,12 +281,19 @@ class PartsCatalogue:
 
             records = self.service.get(part, [])
 
+
             for record in records:
                 if record["field_replaceable"] != "Y":
                     continue
 
+                # Invalid serial intervals cannot establish compatibility.
+                # The Y flag is retained separately for part status.
+                if not record.get("serial_valid", True):
+                    continue
+
                 lower = record["serial_from"]
                 upper = record["serial_to"]
+
 
                 lower_ok = lower is None or serial >= lower
                 upper_ok = upper is None or serial <= upper
