@@ -163,7 +163,7 @@ After running the startup command at least once, open a second terminal and run:
 .venv/bin/python -m pytest tests/ -v
 ```
 
-The current test suite contains 34 tests.
+The current test suite contains 35 tests.
 
 Testing includes:
 

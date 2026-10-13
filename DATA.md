@@ -323,9 +323,19 @@ The test scenarios cover:
 
 Synthetic datasets are isolated in temporary test directories and do not overwrite the repository's original `data/` files.
 
+### Randomized Replacement-Data Verification
+
+An additional automated test generates 30 independent synthetic CSV exports with varying assembly structures, shared components, duplicate relationships, quantities, revisions, part statuses, and serial ranges.
+
+For each generated export, the expected catalogue results are calculated independently and compared with the implementation.
+
+All 30 generated datasets passed. These tests strengthen confidence in generalization to unseen acyclic machine structures but do not guarantee correctness for every possible malformed or cyclic dataset.
+
+The complete automated test suite contains **35 passing tests**.
+
 ### 4.3 Automated Test Results
 
-The final automated test suite contains **34 passing tests**.
+The final automated test suite contains **35 passing tests**.
 
 A dedicated regression test verifies that malformed serial ranges do not erase field-replaceability information and are not accidentally treated as unrestricted intervals.
 
@@ -335,7 +345,7 @@ Tests were executed using:
 
 The latest local execution completed with:
 
-**34 passed, 1 non-failing dependency deprecation warning.**
+**35 passed, 1 non-failing dependency deprecation warning.**
 
 The tests validate the implemented behavior for the scenarios covered, but they do not prove correctness for every possible unseen dataset.
 
