@@ -1,588 +1,356 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
-<title>Arcadia | Service Parts Catalogue</title>
-
-<style>
-:root {
-    font-family: Inter, "Segoe UI", Arial, sans-serif;
-    color: #17263c;
-    background: #f4f7fb;
-}
-
-* { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    min-height: 100vh;
-}
-
-header {
-    background: #152843;
-    color: white;
-    padding: 25px 6%;
-}
-
-header h1 {
-    margin: 0 0 7px;
-    font-size: 26px;
-}
-
-header p {
-    margin: 0;
-    color: #c5d5e7;
-    font-size: 14px;
-}
-
-.container {
-    max-width: 1180px;
-    margin: 32px auto;
-    padding: 0 20px;
-}
-
-.intro {
-    margin-bottom: 25px;
-}
-
-.intro h2 {
-    margin-bottom: 8px;
-}
-
-.intro p {
-    color: #64748b;
-    line-height: 1.6;
-}
-
-.layout {
-    display: grid;
-    grid-template-columns: 330px minmax(0, 1fr);
-    gap: 22px;
-}
-
-.card {
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 23px;
-    box-shadow: 0 4px 20px #1a345208;
-}
-
-.card h3 {
-    margin: 0 0 20px;
-}
-
-.mode {
-    display: block;
-    width: 100%;
-    padding: 13px 15px;
-    margin-bottom: 10px;
-    border-radius: 9px;
-    border: 1px solid #dae2ed;
-    background: white;
-    text-align: left;
-    cursor: pointer;
-    font-size: 14px;
-    color: #263a54;
-}
-
-.mode:hover {
-    background: #f2f6fd;
-}
-
-.mode.active {
-    background: #e9f1ff;
-    color: #1659b7;
-    border-color: #92bbf6;
-    font-weight: 600;
-}
-
-label {
-    display: block;
-    font-weight: 600;
-    margin: 18px 0 9px;
-    font-size: 14px;
-}
-
-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font: inherit;
-    font-size: 14px;
-}
-
-input:focus {
-    outline: 2px solid #b0ceff;
-    border-color: #2563eb;
-}
-
-.primary {
-    background: #2563eb;
-    border: none;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 8px;
-    padding: 13px;
-    width: 100%;
-    margin-top: 17px;
-    font-size: 14px;
-}
-
-.primary:hover {
-    background: #1d4ed8;
-}
-
-.primary:disabled {
-    opacity: 0.65;
-    cursor: wait;
-}
-
-.hint {
-    font-size: 12px;
-    color: #64748b;
-    line-height: 1.6;
-}
-
-.result-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 17px;
-}
-
-.result-header h3 {
-    margin: 0;
-}
-
-.badge {
-    display: inline-block;
-    padding: 6px 11px;
-    background: #e9f8f0;
-    color: #137a48;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.badge.error {
-    background: #fff0f0;
-    color: #b42318;
-}
-
-.summary {
-    padding: 16px;
-    background: #f4f7fc;
-    border: 1px solid #e3eaf5;
-    border-radius: 9px;
-    margin-bottom: 18px;
-    line-height: 1.6;
-    font-size: 14px;
-    overflow-wrap: anywhere;
-}
-
-pre {
-    margin: 0;
-    background: #101e32;
-    color: #dceafa;
-    border-radius: 10px;
-    padding: 20px;
-    overflow: auto;
-    max-height: 520px;
-    font-size: 13px;
-    line-height: 1.65;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-}
-
-.copy {
-    background: transparent;
-    color: #2563eb;
-    border: 1px solid #cbd5e1;
-    border-radius: 7px;
-    padding: 8px 12px;
-    cursor: pointer;
-}
-
-.endpoint {
-    margin-top: 13px;
-    font-family: Consolas, monospace;
-    font-size: 12px;
-    color: #64748b;
-    overflow-wrap: anywhere;
-}
-
-footer {
-    text-align: center;
-    padding: 32px 15px;
-    font-size: 12px;
-    color: #64748b;
-}
-
-footer a {
-    color: #2563eb;
-}
-
-[hidden] {
-    display: none !important;
-}
-
-@media (max-width: 750px) {
-    .layout {
-        grid-template-columns: 1fr;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Arcadia | Service Parts Explorer</title>
+  <style>
+    :root {
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      color: #13243c;
+      background: #f4f7fc;
+      --navy: #102039;
+      --blue: #2563eb;
+      --muted: #62748b;
+      --border: #e3e9f2;
+      --surface: #ffffff;
+      --green: #13865c;
+      --red: #b53b47;
+      --amber: #a26b16;
     }
-
-    header h1 {
-        font-size: 22px;
-    }
-}
-</style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+    button:disabled { opacity: .65; cursor: wait; }
+    .shell { display: grid; grid-template-columns: 244px minmax(0,1fr); min-height: 100vh; }
+    .sidebar { background: var(--navy); color: #e5efff; padding: 27px 17px; display: flex; flex-direction: column; gap: 30px; }
+    .brand { display: flex; align-items: center; gap: 11px; padding: 5px 10px; }
+    .logo { width: 39px; height: 39px; background: linear-gradient(145deg, #35c0d2, #5c7fff); border-radius: 12px; display: grid; place-items: center; color: white; font-size: 22px; font-weight: 800; }
+    .brand h1 { font-size: 17px; letter-spacing: -.35px; margin: 0; line-height: 1.1; }
+    .brand p { font-size: 11px; letter-spacing: 1.1px; text-transform: uppercase; margin: 5px 0 0; color: #94b5dc; }
+    .nav-label { text-transform: uppercase; font-size: 10px; letter-spacing: 1.45px; color: #89a5c8; margin: 0 13px 10px; font-weight: 700; }
+    .nav { display: grid; gap: 5px; }
+    .nav button { background: transparent; color: #c7d6ec; padding: 12px 13px; width: 100%; text-align: left; border: 1px solid transparent; border-radius: 10px; display: flex; align-items: center; gap: 11px; font-size: 13px; }
+    .nav button:hover { background: #213754; }
+    .nav button.active { background: #29486a; border-color: #3d638b; color: white; font-weight: 700; }
+    .nav .nav-symbol { width: 22px; text-align: center; font-size: 17px; }
+    .sidebar-bottom { margin-top: auto; border-top: 1px solid #29405d; padding: 19px 10px 0; color: #b7cbe3; font-size: 12px; line-height: 1.6; }
+    .status-dot { width: 8px; height: 8px; display: inline-block; background: #8fa5bc; border-radius: 50%; margin-right: 5px; }
+    .status-dot.online { background: #3de4a9; box-shadow: 0 0 0 3px #3de4a927; }
+    .sidebar-bottom a { color: #a4d7ff; }
+    .main { padding: 25px clamp(18px, 3.5vw, 46px) 45px; max-width: 1450px; width: 100%; margin: auto; }
+    .topbar { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 22px; }
+    .crumb { font-size: 12px; color: var(--muted); }
+    .crumb strong { color: #263b56; }
+    .topmark { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #68788b; }
+    .pill { background: #e8efff; color: #315fa4; padding: 7px 11px; border-radius: 40px; font-weight: 700; font-size: 11px; }
+    .hero { background: linear-gradient(105deg, #152c4b 0%, #1f416c 70%, #1d597a 100%); border-radius: 19px; padding: 28px 31px; color: white; position: relative; overflow: hidden; box-shadow: 0 15px 35px #18365717; }
+    .hero:after { content: ""; width: 260px; height: 260px; position: absolute; right: -55px; top: -84px; border: 36px solid #ffffff0b; border-radius: 50%; pointer-events: none; }
+    .eyebrow { color: #9ce7f7; text-transform: uppercase; letter-spacing: 1.8px; font-size: 10px; font-weight: 800; margin: 0 0 9px; }
+    .hero h2 { margin: 0; letter-spacing: -.8px; font-size: clamp(23px, 2.5vw, 32px); line-height: 1.2; }
+    .hero p:last-child { margin: 10px 0 0; font-size: 13px; color: #d3e5f5; max-width: 650px; line-height: 1.7; }
+    .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .metric { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 17px 19px; box-shadow: 0 5px 20px #18365706; }
+    .metric .top { display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; gap: 5px; }
+    .metric .icon { color: #6c87a9; background: #f1f5fb; border-radius: 10px; width: 29px; height: 29px; display: grid; place-items: center; font-size: 15px; }
+    .metric .number { font-size: 29px; font-weight: 800; margin-top: 9px; letter-spacing: -.7px; color: #1c3553; font-variant-numeric: tabular-nums; }
+    .metric.ready .number { color: var(--green); }
+    .metric.missing .number { color: var(--red); }
+    .metric.blocked .number { color: var(--amber); }
+    .section-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 26px 0 13px; flex-wrap: wrap; }
+    .section-head h3 { margin: 0; font-size: 19px; letter-spacing: -.3px; }
+    .section-head p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .content-grid { display: grid; grid-template-columns: minmax(240px, 345px) minmax(0, 1fr); gap: 17px; align-items: start; }
+    .card { background: white; border: 1px solid var(--border); border-radius: 15px; box-shadow: 0 6px 18px #13325108; padding: 21px; min-width: 0; }
+    .card h4 { margin: 0 0 6px; font-size: 16px; }
+    .muted { color: var(--muted); }
+    .small { font-size: 12px; line-height: 1.65; }
+    label { display: block; font-size: 12px; font-weight: 700; margin: 17px 0 8px; }
+    input { width: 100%; border: 1px solid #cedaeb; border-radius: 9px; padding: 12px 13px; background: #fff; font-size: 14px; outline-color: #93c5fd; }
+    .primary { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background: #265fdd; color: #fff; border: 0; border-radius: 9px; margin-top: 13px; padding: 12px 15px; font-size: 13px; font-weight: 700; }
+    .primary:hover { background: #1b4fbf; }
+    .subhead { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #71829a; font-weight: 800; margin: 19px 0 10px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .chip { border: 1px solid #d5e1f0; color: #315279; background: #f7faff; border-radius: 16px; font-size: 11px; padding: 7px 10px; font-weight: 600; }
+    .chip:hover { background: #e8f2ff; border-color: #8cb4e6; }
+    .workspace { display: grid; gap: 15px; }
+    .response-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+    .response-top h4 { margin: 0; font-size: 17px; }
+    .tag { display: inline-flex; align-items: center; gap: 6px; border-radius: 40px; padding: 6px 11px; font-weight: 700; font-size: 11px; }
+    .tag.ready { background: #e8f8ef; color: #167a50; }
+    .tag.missing { background: #fdf0f1; color: #b23242; }
+    .tag.blocked { background: #fff5df; color: #8f6519; }
+    .tag.neutral { background: #edf2f8; color: #5c718b; }
+    .result { min-height: 150px; }
+    .result h5 { font-size: 18px; margin: 0 0 5px; overflow-wrap: anywhere; }
+    .result .description { color: #61738d; font-size: 13px; margin: 0 0 19px; line-height: 1.6; }
+    .fact-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+    .fact { border: 1px solid #e8edf4; border-radius: 10px; padding: 12px; background: #f9fbfe; min-width: 0; }
+    .fact .k { display: block; font-size: 11px; color: #62758c; margin-bottom: 5px; }
+    .fact .v { font-size: 16px; font-weight: 800; overflow-wrap: anywhere; }
+    .section-divider { border-top: 1px solid #edf1f6; padding-top: 15px; margin-top: 15px; }
+    .section-divider h6 { font-size: 12px; margin: 0 0 11px; text-transform: uppercase; letter-spacing: .7px; color: #536b86; }
+    .relationship { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .child-list { display: grid; gap: 7px; max-height: 235px; overflow: auto; }
+    .child-row { border: 1px solid #e3eaf4; border-radius: 9px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; text-align: left; background: #fff; color: #1b3d68; font-size: 12px; gap: 10px; }
+    .child-row:hover { background: #f2f7ff; }
+    .qty { background: #eff4fa; color: #60748a; padding: 4px 7px; border-radius: 6px; white-space: nowrap; }
+    .path-list { display: grid; gap: 11px; max-height: 400px; overflow: auto; }
+    .path-row { border: 1px solid #e3eaf4; border-radius: 10px; padding: 11px; background: #fbfcff; }
+    .path-number { font-size: 10px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; color: #7588a0; margin-bottom: 10px; }
+    .path-trail { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
+    .path-node { border-radius: 7px; border: 1px solid #d8e5f5; padding: 7px 9px; background: #fff; color: #214974; font-weight: 700; font-size: 11px; }
+    .path-node:last-child { color: #116d70; border-color: #b8e4e1; background: #eaf9f5; }
+    .path-arrow { color: #91a3b7; font-size: 14px; }
+    .callout { border: 1px solid #dbebfd; background: #f1f7ff; color: #31577e; border-radius: 11px; padding: 15px; font-size: 12px; line-height: 1.6; }
+    .empty { padding: 30px 18px; border: 1px dashed #dbe4ef; background: #fafcff; border-radius: 12px; text-align: center; color: #617991; font-size: 13px; line-height: 1.7; }
+    .error { background: #fff2f2; border: 1px solid #ffd2d4; color: #9a2e3c; padding: 15px; border-radius: 11px; line-height: 1.65; font-size: 13px; }
+    .json-card { padding: 0; overflow: hidden; }
+    .json-head { padding: 13px 18px; display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    .json-head h4 { font-size: 13px; margin: 0; }
+    .text-button { color: #2865bb; border: 1px solid #d4e2f4; border-radius: 7px; background: white; padding: 7px 11px; font-size: 11px; font-weight: 700; }
+    pre { background: #14233a; padding: 19px; color: #dce9fd; margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; line-height: 1.65; max-height: 330px; overflow: auto; }
+    details > summary { cursor: pointer; list-style: none; }
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] > summary { border-bottom: 1px solid var(--border); }
+    .loader { width: 21px; height: 21px; border: 3px solid #dce8f5; border-top-color: #2563eb; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hint { font-size: 11px; color: var(--muted); line-height: 1.6; margin: 10px 0 0; }
+    .footer { margin-top: 30px; color: #8291a5; font-size: 11px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer a { color: #3769aa; }
+    [hidden] { display: none !important; }
+    @media(max-width: 1060px) { .shell { grid-template-columns: 200px minmax(0,1fr); } .metrics { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+    @media(max-width: 760px) { .shell { display: block; } .sidebar { padding: 14px; gap: 14px; } .brand { padding: 3px 1px; } .nav { grid-template-columns: repeat(4, minmax(0,1fr)); } .nav button { display: grid; justify-items: center; padding: 10px 4px; gap: 4px; font-size: 10px; text-align: center; } .nav-label,.sidebar-bottom { display: none; } .main { padding: 17px; } .hero { padding: 22px; } .content-grid { grid-template-columns: 1fr; } }
+    @media(max-width: 400px) { .metrics { gap: 8px; } .metric { padding: 13px; } .metric .number { font-size: 25px; } .fact-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
-
 <body>
-
-<header>
-    <h1>Arcadia Service Parts Catalogue</h1>
-    <p>
-        AM-700 Machine | Parts Identification &
-        Service Compatibility
-    </p>
-</header>
-
-<main class="container">
-
-<section class="intro">
-    <h2>Machine Parts Explorer</h2>
-    <p>
-        Explore machine components, locate assembly paths,
-        validate catalogue records, and verify serial
-        compatibility using reconciled engineering data.
-    </p>
-</section>
-
-<div class="layout">
-
-    <section class="card">
-        <h3>Catalogue Operations</h3>
-
-        <button type="button" class="mode active"
-                data-mode="validation">
-            Catalogue Validation
-        </button>
-
-        <button type="button" class="mode"
-                data-mode="part">
-            Part Information
-        </button>
-
-        <button type="button" class="mode"
-                data-mode="paths">
-            Assembly Paths
-        </button>
-
-        <button type="button" class="mode"
-                data-mode="serial">
-            Serial Compatibility
-        </button>
-
-        <form id="lookupForm">
-
-            <div id="inputGroup" hidden>
-                <label for="queryInput" id="inputLabel">
-                    Enter value
-                </label>
-
-                <input
-                    id="queryInput"
-                    autocomplete="off"
-                    placeholder="Enter part number"
-                >
-            </div>
-
-            <button type="submit"
-                    class="primary"
-                    id="runButton">
-                Run Query
-            </button>
-
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand"><div class="logo" aria-hidden="true">A</div><div><h1>ARCADIA</h1><p>Service Intelligence</p></div></div>
+    <div><p class="nav-label">Workspace</p><nav class="nav" aria-label="Catalogue operations">
+      <button class="active" type="button" data-mode="part"><span class="nav-symbol" aria-hidden="true">▦</span>Part Explorer</button>
+      <button type="button" data-mode="paths"><span class="nav-symbol" aria-hidden="true">⑂</span>Assembly Paths</button>
+      <button type="button" data-mode="serial"><span class="nav-symbol" aria-hidden="true">✓</span>Serial Check</button>
+      <button type="button" data-mode="validation"><span class="nav-symbol" aria-hidden="true">▤</span>Catalogue Audit</button>
+    </nav></div>
+    <div class="sidebar-bottom"><div><span id="connectionDot" class="status-dot"></span><span id="connectionText">Checking service…</span></div><p>AM-700 bottling line<br>Local, deterministic catalogue</p><p><a href="/docs">Developer API docs ↗</a></p></div>
+  </aside>
+  <main class="main">
+    <div class="topbar"><div class="crumb">Service workspace / <strong>Machine AM-700</strong></div><div class="topmark"><span class="pill">READ-ONLY CATALOGUE</span></div></div>
+    <section class="hero"><p class="eyebrow">Arcadia Field Service</p><h2>Find the right part. Faster.</h2><p>Explore the machine hierarchy, trace assemblies, and verify service compatibility from reconciled engineering records.</p></section>
+    <section class="metrics" aria-label="Current catalogue counts">
+      <div class="metric"><div class="top"><span>Machine parts</span><span class="icon" aria-hidden="true">▦</span></div><div id="metricParts" class="number">—</div></div>
+      <div class="metric ready"><div class="top"><span>Ready to replace</span><span class="icon" aria-hidden="true">✓</span></div><div id="metricReady" class="number">—</div></div>
+      <div class="metric missing"><div class="top"><span>Missing metadata</span><span class="icon" aria-hidden="true">!</span></div><div id="metricMissing" class="number">—</div></div>
+      <div class="metric blocked"><div class="top"><span>Not replaceable</span><span class="icon" aria-hidden="true">⊘</span></div><div id="metricBlocked" class="number">—</div></div>
+    </section>
+    <div class="section-head"><div><h3 id="modeTitle">Part explorer</h3><p id="modeDescription">Identify a component and inspect where it belongs.</p></div><span class="pill" id="modePill">PART DETAILS</span></div>
+    <div class="content-grid">
+      <section class="card" aria-label="Query controls">
+        <h4 id="formTitle">Find a part</h4><p class="small muted" id="formDescription">Search by part number. Identifiers are case-insensitive.</p>
+        <form id="queryForm" novalidate>
+          <div id="inputGroup"><label for="queryInput" id="queryLabel">Part number</label><input id="queryInput" value="AS-40000" autocomplete="off" spellcheck="false" placeholder="e.g. AS-40000"></div>
+          <button class="primary" id="submitButton" type="submit">Search catalogue →</button>
         </form>
-
-        <p class="hint" id="operationHint">
-            Overview of all parts included in the machine.
-        </p>
-
-        <div class="endpoint" id="endpointLabel"></div>
-
-    </section>
-
-    <section class="card">
-
-        <div class="result-header">
-            <h3>API Response</h3>
-
-            <div>
-                <span class="badge" id="statusBadge">
-                    Ready
-                </span>
-
-                <button type="button"
-                        class="copy"
-                        id="copyButton">
-                    Copy JSON
-                </button>
-            </div>
-        </div>
-
-        <div class="summary"
-             id="resultSummary"
-             aria-live="polite">
-            Select an operation to view results.
-        </div>
-
-        <pre id="resultCode"
-             aria-live="polite">Waiting for response...</pre>
-
-    </section>
-
+        <div id="exampleArea"><div class="subhead">Parts in this machine</div><div class="chips" id="quickParts"><span class="small muted">Loading parts…</span></div><p class="hint">Quick picks come from the live machine catalogue, not a fixed sample list.</p></div>
+        <div class="callout" style="margin-top: 19px"><strong>Source of truth:</strong> Results are computed from the current <code>data/</code> CSV exports. No external lookup or generative AI is used.</div>
+      </section>
+      <div class="workspace">
+        <section class="card" aria-label="Human-readable result"><div class="response-top"><h4>Service result</h4><span class="tag neutral" id="responseBadge" role="status">Ready</span></div><div class="result" id="visualResult" aria-live="polite"><div class="empty">Select an operation to explore the machine catalogue.</div></div></section>
+        <details class="card json-card" id="jsonDetails"><summary class="json-head"><h4>Raw API response · JSON</h4><span class="text-button" id="copyButton" role="button" tabindex="0">Copy JSON</span></summary><pre id="jsonOutput">Waiting for a query…</pre></details>
+      </div>
+    </div>
+    <div class="footer"><span>Arcadia AM-700 · Service Parts Catalogue</span><span><a href="/docs">Swagger API</a> · <a href="/health">Health check</a></span></div>
+  </main>
 </div>
-</main>
-
-<footer>
-    Arcadia AM-700 | Service Parts Catalogue API
-    <p>
-        <a href="/docs">Interactive API Documentation</a>
-        &nbsp;|&nbsp;
-        <a href="/health">Health Check</a>
-    </p>
-</footer>
-
 <script>
+"use strict";
+const $ = id => document.getElementById(id);
+const menus = document.querySelectorAll("[data-mode]");
+let mode = "part";
+let sequence = 0;
+let currentJson = null;
+let cachedValidation = null;
+let quickPartNumbers = ["AS-40000"];
 const modes = {
-    validation: {
-        value: "",
-        label: "",
-        hint: "Counts ready, missing, and non-replaceable parts."
-    },
-    part: {
-        value: "AS-40003",
-        label: "Part number",
-        hint: "Returns part details, quantities, parents and children."
-    },
-    paths: {
-        value: "FA-30012",
-        label: "Part number",
-        hint: "Returns all sorted assembly paths from the machine root."
-    },
-    serial: {
-        value: "2500",
-        label: "Machine serial number",
-        hint: "Counts ready parts compatible with the given serial."
-    }
+  part: { title: "Part explorer", description: "Identify a component and inspect where it belongs.", pill: "PART DETAILS", form: "Find a part", intro: "Search by part number. Identifiers are case-insensitive.", label: "Part number", placeholder: "e.g. AS-40000", button: "Search catalogue →" },
+  paths: { title: "Assembly path explorer", description: "See every route from the machine root to a component.", pill: "ASSEMBLY PATHS", form: "Trace a component", intro: "Each path shows a valid machine assembly route.", label: "Part number", placeholder: "e.g. AS-40000", button: "Find all paths →" },
+  serial: { title: "Serial compatibility", description: "Check how many ready parts apply to a machine serial.", pill: "SERIAL CHECK", form: "Check a serial", intro: "Only ready parts within inclusive serial ranges are counted.", label: "Machine serial number", placeholder: "e.g. 2500", button: "Check compatibility →" },
+  validation: { title: "Catalogue overview", description: "Inspect the reconciliation status of the entire machine.", pill: "CATALOGUE OVERVIEW", form: "Validate machine catalogue", intro: "View live status counts calculated from the current CSV files.", label: "", placeholder: "", button: "Refresh catalogue →" }
 };
-
-let selectedMode = "validation";
-let requestVersion = 0;
-
-const input = document.getElementById("queryInput");
-const inputGroup = document.getElementById("inputGroup");
-const inputLabel = document.getElementById("inputLabel");
-const hint = document.getElementById("operationHint");
-const endpointLabel = document.getElementById("endpointLabel");
-
-const resultCode = document.getElementById("resultCode");
-const resultSummary = document.getElementById("resultSummary");
-const statusBadge = document.getElementById("statusBadge");
-const runButton = document.getElementById("runButton");
-
-
-function makeEndpoint(mode, value) {
-    if (mode === "validation") {
-        return "/api/validation";
-    }
-
-    if (!value.trim()) {
-        throw new Error("Please enter a value.");
-    }
-
-    if (mode === "serial") {
-        if (!/^[0-9]+$/.test(value.trim())) {
-            throw new Error(
-                "Serial number must be a non-negative whole number."
-            );
-        }
-
-        return "/api/serial/" + encodeURIComponent(value.trim());
-    }
-
-    const part = encodeURIComponent(value.trim());
-
-    if (mode === "paths") {
-        return "/api/parts/" + part + "/paths";
-    }
-
-    return "/api/parts/" + part;
+function node(tag, className, text) { const e = document.createElement(tag); if (className) e.className = className; if (text !== undefined) e.textContent = String(text); return e; }
+function clear(element) { element.replaceChildren(); }
+function summaryBadge(text, type = "neutral") { $("responseBadge").textContent = text; $("responseBadge").className = "tag " + type; }
+function addFact(target, title, value) { const outer = node("div", "fact"); outer.append(node("span", "k", title), node("div", "v", value)); target.append(outer); }
+function renderEmpty(message) { const empty = node("div", "empty", message); $("visualResult").replaceChildren(empty); }
+function renderError(message) { summaryBadge("Check request", "missing"); $("visualResult").replaceChildren(node("div", "error", message)); $("jsonOutput").textContent = JSON.stringify({error: message}, null, 2); currentJson = {error: message}; }
+function parseStatus(status) { return status === "ready" ? "ready" : status === "missing" ? "missing" : "blocked"; }
+function readableStatus(status) { return status === "not_replaceable" ? "Not replaceable" : status === "missing" ? "Missing master data" : "Ready"; }
+function buttonChip(part, callback) { const b = node("button", "chip", part); b.type = "button"; b.addEventListener("click", callback); return b; }
+function setMode(nextMode) {
+  mode = nextMode; sequence++;
+  $("submitButton").disabled = false;
+  menus.forEach(b => { const yes = b.dataset.mode === nextMode; b.classList.toggle("active", yes); b.setAttribute("aria-current", yes ? "page" : "false"); });
+  const config = modes[nextMode];
+  $("modeTitle").textContent = config.title; $("modeDescription").textContent = config.description; $("modePill").textContent = config.pill;
+  $("formTitle").textContent = config.form; $("formDescription").textContent = config.intro; $("queryLabel").textContent = config.label;
+  $("queryInput").placeholder = config.placeholder; $("submitButton").textContent = config.button;
+  $("inputGroup").hidden = nextMode === "validation";
+  $("exampleArea").hidden = !["part", "paths"].includes(nextMode);
+  $("queryInput").value = nextMode === "serial" ? "2500" : "AS-40000";
+  summaryBadge("Ready"); currentJson = null; $("jsonOutput").textContent = "Waiting for a query…";
+  if (nextMode === "validation") runQuery();
+  else renderEmpty(nextMode === "serial" ? "Enter a serial number to check compatible, field-replaceable parts." : "Enter a part number or select a live quick-pick to begin.");
 }
-
-
-function describeResult(mode, data) {
-    if (mode === "validation") {
-        return (
-            "Machine catalogue: " + data.parts + " parts. " +
-            data.ready + " ready, " +
-            data.missing + " missing, and " +
-            data.not_replaceable + " not replaceable."
-        );
-    }
-
-    if (mode === "part") {
-        return (
-            "Part: " + data.part_number +
-            " | Status: " + data.status +
-            " | Total quantity: " + data.total_quantity +
-            " | Parents: " + data.parents.length +
-            " | Children: " + data.children.length
-        );
-    }
-
-    if (mode === "paths") {
-        return (
-            data.part_number + " has " +
-            data.paths.length +
-            " assembly path(s) from the machine root."
-        );
-    }
-
-    return (
-        data.applicable_parts +
-        " ready parts are applicable to machine serial " +
-        data.serial + "."
-    );
+function updateMetrics(data) {
+  cachedValidation = data;
+  $("metricParts").textContent = Number(data.parts).toLocaleString();
+  $("metricReady").textContent = Number(data.ready).toLocaleString();
+  $("metricMissing").textContent = Number(data.missing).toLocaleString();
+  $("metricBlocked").textContent = Number(data.not_replaceable).toLocaleString();
 }
-
-
-function showError(message) {
-    statusBadge.textContent = "Error";
-    statusBadge.classList.add("error");
-    resultSummary.textContent = message;
-
-    resultCode.textContent = JSON.stringify(
-        { error: message },
-        null,
-        2
-    );
+function renderPart(data) {
+  const container = node("div");
+  const head = node("div", "response-top");
+  const heading = node("div"); heading.append(node("h5", "", data.part_number), node("p", "description", data.description ?? "No master record available for this part."));
+  head.append(heading, node("span", "tag " + parseStatus(data.status), readableStatus(data.status)));
+  container.append(head);
+  const facts = node("div", "fact-grid");
+  addFact(facts, "Latest revision", data.revision ?? "Unknown");
+  addFact(facts, "Quantity per machine", data.total_quantity);
+  addFact(facts, "Immediate parents", data.parents.length);
+  addFact(facts, "Child part types", data.children.length);
+  container.append(facts);
+  const parents = node("section", "section-divider"); parents.append(node("h6", "", "Appears inside"));
+  const parentWrap = node("div", "relationship");
+  if (data.parents.length) data.parents.forEach(p => parentWrap.append(buttonChip(p, () => {$("queryInput").value = p; runQuery();}))); else parentWrap.append(node("span", "small muted", "This is the machine root."));
+  parents.append(parentWrap); container.append(parents);
+  const children = node("section", "section-divider"); children.append(node("h6", "", "Contains"));
+  const list = node("div", "child-list");
+  if (data.children.length) data.children.forEach(child => { const b = node("button", "child-row"); b.type = "button"; b.append(node("strong", "", child.part_number), node("span", "qty", "× " + child.quantity)); b.addEventListener("click", () => {$("queryInput").value = child.part_number; runQuery();}); list.append(b); });
+  else list.append(node("span", "small muted", "No direct child components."));
+  children.append(list); container.append(children);
+  const pathAction = node("section", "section-divider");
+  const findPaths = node("button", "text-button", "Trace all assembly paths ↗");
+  findPaths.type = "button";
+  findPaths.addEventListener("click", () => { setMode("paths"); $("queryInput").value = data.part_number; runQuery(); });
+  pathAction.append(findPaths); container.append(pathAction);
+  $("visualResult").replaceChildren(container);
+  summaryBadge("HTTP 200", "ready");
 }
-
-
+function renderPaths(data) {
+  const container = node("div");
+  container.append(node("h5", "", data.part_number), node("p", "description", data.paths.length + " assembly route(s) from AS-40000"));
+  const list = node("div", "path-list");
+  if (!data.paths.length) list.append(node("div", "empty", "No assembly routes found."));
+  data.paths.forEach((path, i) => {
+    const row = node("div", "path-row"); row.append(node("div", "path-number", "Path " + (i+1)));
+    const trail = node("div", "path-trail");
+    path.forEach((part, j) => {
+      if (j) trail.append(node("span", "path-arrow", "→"));
+      const b = node("button", "path-node", part); b.type = "button";
+      b.addEventListener("click", () => { setMode("part"); $("queryInput").value = part; runQuery(); });
+      trail.append(b);
+    }); row.append(trail); list.append(row);
+  });
+  container.append(list); $("visualResult").replaceChildren(container); summaryBadge("HTTP 200", "ready");
+}
+function renderSerial(data) {
+  const container = node("div");
+  container.append(node("h5", "", "Machine serial " + data.serial));
+  container.append(node("p", "description", "Service compatibility summary across all ready catalogue parts."));
+  const facts = node("div", "fact-grid");
+  addFact(facts, "Applicable ready parts", Number(data.applicable_parts).toLocaleString());
+  if (cachedValidation) {
+    addFact(facts, "Total ready part types", Number(cachedValidation.ready).toLocaleString());
+    const percent = cachedValidation.ready ? 100 * data.applicable_parts / cachedValidation.ready : 0;
+    addFact(facts, "Share of ready part types", percent.toFixed(1) + "%");
+  }
+  container.append(facts);
+  container.append(node("p", "callout", "Counts distinct ready part numbers, not physical units or a compatibility verdict for any one selected part. Serial bounds are inclusive."));
+  $("visualResult").replaceChildren(container); summaryBadge("HTTP 200", "ready");
+}
+function renderValidation(data) {
+  const container = node("div"); container.append(node("h5", "", "Catalogue validation"));
+  container.append(node("p", "description", "Live status distribution across parts reachable from the AM-700 machine root."));
+  const grid = node("div", "fact-grid");
+  addFact(grid, "Total part types", Number(data.parts).toLocaleString());
+  addFact(grid, "Ready", Number(data.ready).toLocaleString());
+  addFact(grid, "Missing master data", Number(data.missing).toLocaleString());
+  addFact(grid, "Not replaceable", Number(data.not_replaceable).toLocaleString());
+  container.append(grid);
+  const sum = data.ready + data.missing + data.not_replaceable;
+  container.append(node("p", "hint", sum === data.parts ? "✓ Status counts reconcile to the total number of parts." : "Note: Status counts differ from the total number of parts."));
+  container.append(node("p", "callout", "The API validation endpoint returns status counts. Detailed CSV diagnostics and assumptions are documented in DATA.md."));
+  $("visualResult").replaceChildren(container); summaryBadge("HTTP 200", "ready");
+}
+function endpointFor(selected, value) {
+  if (selected === "validation") return "/api/validation";
+  if (!value.trim()) throw new Error("Enter a value before running this query.");
+  if (selected === "serial") {
+    if (!/^[0-9]+$/.test(value.trim())) throw new Error("The serial number must be a non-negative whole number.");
+    return "/api/serial/" + encodeURIComponent(value.trim());
+  }
+  if (value.includes("/") || value.includes("\\")) throw new Error("A part number cannot contain slash characters.");
+  const p = encodeURIComponent(value.trim());
+  return "/api/parts/" + p + (selected === "paths" ? "/paths" : "");
+}
 async function runQuery() {
-    const mode = selectedMode;
-    const value = input.value;
-    const version = ++requestVersion;
-
-    let endpoint;
-
-    try {
-        endpoint = makeEndpoint(mode, value);
-    } catch (error) {
-        showError(error.message);
-        return;
-    }
-
-    endpointLabel.textContent = "GET " + endpoint;
-
-    statusBadge.textContent = "Loading";
-    statusBadge.classList.remove("error");
-    resultSummary.textContent = "Fetching catalogue information...";
-    resultCode.textContent = "Loading...";
-    runButton.disabled = true;
-
-    try {
-        const response = await fetch(endpoint, {
-            headers: { "Accept": "application/json" }
-        });
-
-        const data = await response.json();
-
-        if (version !== requestVersion) {
-            return;
-        }
-
-        if (!response.ok) {
-            throw new Error(
-                data.detail || "Request failed"
-            );
-        }
-
-        resultSummary.textContent = describeResult(mode, data);
-        resultCode.textContent = JSON.stringify(data, null, 2);
-        statusBadge.textContent = "HTTP " + response.status;
-
-    } catch (error) {
-        if (version === requestVersion) {
-            showError(error.message);
-        }
-    } finally {
-        if (version === requestVersion) {
-            runButton.disabled = false;
-        }
-    }
+  const selected = mode; const version = ++sequence; const rawValue = $("queryInput").value;
+  let endpoint;
+  try { endpoint = endpointFor(selected, rawValue); } catch (e) { renderError(e.message); return; }
+  $("submitButton").disabled = true;
+  summaryBadge("Loading", "neutral");
+  const loader = node("div", "empty"); loader.append(node("div", "loader"), node("div", "", "Fetching the latest catalogue result…")); $("visualResult").replaceChildren(loader);
+  try {
+    const response = await fetch(endpoint, {headers: {Accept: "application/json"}});
+    const data = await response.json();
+    if (version !== sequence) return;
+    currentJson = data; $("jsonOutput").textContent = JSON.stringify(data, null, 2);
+    if (!response.ok) {renderError(typeof data.detail === "string" ? data.detail : "Request failed with HTTP " + response.status); return;}
+    if (selected === "part") renderPart(data);
+    if (selected === "paths") renderPaths(data);
+    if (selected === "serial") renderSerial(data);
+    if (selected === "validation") {updateMetrics(data); renderValidation(data);}
+  } catch (error) { if (version === sequence) renderError("Unable to reach the local service. Check that FastAPI is running. " + error.message); }
+  finally { if (version === sequence) $("submitButton").disabled = false; }
 }
-
-
-function selectMode(mode) {
-    selectedMode = mode;
-
-    document.querySelectorAll("[data-mode]").forEach(button => {
-        const active = button.dataset.mode === mode;
-        button.classList.toggle("active", active);
-        button.setAttribute("aria-pressed", String(active));
-    });
-
-    input.value = modes[mode].value;
-    inputLabel.textContent = modes[mode].label;
-    inputGroup.hidden = mode === "validation";
-    hint.textContent = modes[mode].hint;
-
-    runQuery();
+async function init() {
+  try {
+    const [healthRes, validationRes, rootRes] = await Promise.all([
+      fetch("/health"), fetch("/api/validation"), fetch("/api/parts/AS-40000")
+    ]);
+    if (healthRes.ok) { $("connectionDot").classList.add("online"); $("connectionText").textContent = "Service online"; }
+    else $("connectionText").textContent = "Service unavailable";
+    if (validationRes.ok) updateMetrics(await validationRes.json());
+    if (rootRes.ok) {
+      const root = await rootRes.json();
+      quickPartNumbers = ["AS-40000", ...root.children.map(c => c.part_number).slice(0, 7)];
+    }
+  } catch (_) { $("connectionText").textContent = "Service unavailable"; }
+  const wrap = $("quickParts"); clear(wrap);
+  quickPartNumbers.forEach(part => wrap.append(buttonChip(part, () => {$("queryInput").value = part; runQuery();})));
+  runQuery();
 }
-
-
-document.querySelectorAll("[data-mode]").forEach(button => {
-    button.addEventListener("click", () => {
-        selectMode(button.dataset.mode);
-    });
-});
-
-
-document.getElementById("lookupForm")
-    .addEventListener("submit", event => {
-        event.preventDefault();
-        runQuery();
-    });
-
-
-document.getElementById("copyButton")
-    .addEventListener("click", async () => {
-        try {
-            await navigator.clipboard.writeText(
-                resultCode.textContent
-            );
-        } catch (error) {
-            console.error("Could not copy response:", error);
-        }
-    });
-
-
-// Load the validation summary when the page opens.
-selectMode("validation");
+menus.forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+$("queryForm").addEventListener("submit", e => {e.preventDefault(); runQuery();});
+async function copyJson(e) {
+  e.stopPropagation(); e.preventDefault();
+  if (!currentJson) return;
+  const target = $("copyButton");
+  try {
+    await navigator.clipboard.writeText(JSON.stringify(currentJson, null, 2));
+    target.textContent = "Copied ✓";
+    setTimeout(() => {target.textContent = "Copy JSON";}, 1300);
+  } catch (_) { target.textContent = "Copy unavailable"; }
+}
+$("copyButton").addEventListener("click", copyJson);
+$("copyButton").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") copyJson(e); });
+init();
 </script>
-
 </body>
 </html>

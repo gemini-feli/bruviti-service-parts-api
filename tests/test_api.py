@@ -113,13 +113,32 @@ def test_missing_part_returns_404(client, url):
 
 
 
+
 def test_homepage(client):
     response = client.get("/")
 
     assert response.status_code == 200
-    assert "Arcadia Service Parts Catalogue" in response.text
-    assert 'id="lookupForm"' in response.text
-    assert 'data-mode="validation"' in response.text
-    assert 'data-mode="part"' in response.text
-    assert 'data-mode="paths"' in response.text
-    assert 'data-mode="serial"' in response.text
+
+    html = response.text
+
+    # Verify the new dashboard identity
+    assert "Arcadia | Service Parts Explorer" in html
+    assert "Find the right part. Faster." in html
+
+    # Verify important dashboard elements
+    assert 'id="queryForm"' in html
+    assert 'id="queryInput"' in html
+    assert 'id="visualResult"' in html
+    assert 'id="jsonOutput"' in html
+
+    # Verify all four navigation operations
+    assert 'data-mode="part"' in html
+    assert 'data-mode="paths"' in html
+    assert 'data-mode="serial"' in html
+    assert 'data-mode="validation"' in html
+
+    # Verify frontend integration with backend APIs
+    assert "/api/validation" in html
+    assert "/api/parts/" in html
+    assert "/api/serial/" in html
+
