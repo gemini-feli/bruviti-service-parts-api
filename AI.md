@@ -42,11 +42,11 @@ The verification process included:
 - Examining and reconciling the three supplied CSV datasets.
 - Checking catalogue counts, part statuses, revision selection, quantities, and assembly relationships against expected results.
 - Developing an independent synthetic dataset to test duplicate records, circular relationships, disconnected components, missing metadata, and shared parts.
-- Executing **32 automated tests**, covering catalogue logic, API behavior, serial compatibility, and error handling.
+- Executing **33 automated tests**, covering catalogue logic, API behavior, serial compatibility, and error handling.
 - Manually exercising the FastAPI endpoints and interactive dashboard.
 - Maintaining the implementation and documentation through Git version control.
 
-All 32 automated tests passed during the latest local verification. This establishes confidence in the tested scenarios while recognizing that additional unseen datasets may expose further edge cases.
+All 33 automated tests passed during the latest local verification. This establishes confidence in the tested scenarios while recognizing that additional unseen datasets may expose further edge cases.
 
 ## 4. Technical Approach and AI Independence
 
