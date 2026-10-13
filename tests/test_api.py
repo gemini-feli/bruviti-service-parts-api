@@ -1,118 +1,118 @@
 
+"""HTTP contract tests against the independent test dataset."""
+
 import pytest
 from fastapi.testclient import TestClient
 
-from app.main import app
-
-client = TestClient(app)
+from app import main as main_module
 
 
-def test_health():
+@pytest.fixture
+def client(monkeypatch, catalogue):
+    # Temporarily use the synthetic catalogue for each test.
+    monkeypatch.setattr(
+        main_module,
+        "catalogue",
+        catalogue
+    )
+
+    with TestClient(main_module.app) as test_client:
+        yield test_client
+
+
+def test_health(client):
     response = client.get("/health")
 
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
 
-def test_validation():
+def test_validation(client):
     response = client.get("/api/validation")
 
     assert response.status_code == 200
 
-    data = response.json()
-
-    assert data == {
-        "parts": 875,
-        "ready": 483,
-        "missing": 25,
-        "not_replaceable": 367
+    assert response.json() == {
+        "parts": 4,
+        "ready": 2,
+        "missing": 1,
+        "not_replaceable": 1,
     }
 
 
-def test_part_details():
-    response = client.get("/api/parts/AS-40003")
-
-    assert response.status_code == 200
-
-    data = response.json()
-
-    assert data["part_number"] == "AS-40003"
-    assert data["status"] == "not_replaceable"
-    assert data["total_quantity"] == 1
-    assert data["parents"] == ["AS-40002"]
-
-
-def test_case_insensitive_lookup():
-    response = client.get("/api/parts/fa-30019")
-
-    assert response.status_code == 200
-
-    data = response.json()
-
-    assert data["part_number"] == "FA-30019"
-    assert data["total_quantity"] == 178
-
-
-def test_unknown_part():
-    response = client.get("/api/parts/UNKNOWN-999")
-
-    assert response.status_code == 404
-
-
-def test_unknown_part_paths():
-    response = client.get(
-        "/api/parts/UNKNOWN-999/paths"
-    )
-
-    assert response.status_code == 404
-
-
-def test_root_quantity():
-    response = client.get("/api/parts/AS-40000")
-
-    assert response.status_code == 200
-    assert response.json()["total_quantity"] == 1
-
-
-def test_paths():
-    response = client.get("/api/parts/FA-30012/paths")
-
-    assert response.status_code == 200
-
-    paths = response.json()["paths"]
-
-    assert len(paths) == 17
-    assert paths == sorted(paths)
-
-    for path in paths:
-        assert path[0] == "AS-40000"
-        assert path[-1] == "FA-30012"
-
-
-def test_serial_compatibility():
-    response = client.get("/api/serial/2500")
+def test_part_details(client):
+    response = client.get("/api/parts/fa-9")
 
     assert response.status_code == 200
 
     assert response.json() == {
-        "serial": 2500,
-        "applicable_parts": 448
+        "part_number": "FA-9",
+        "description": "Latest fastener",
+        "revision": "B",
+        "status": "ready",
+        "total_quantity": 10,
+        "parents": ["AS-1", "AS-40000"],
+        "children": [],
+    }
+
+
+def test_missing_master_part(client):
+    response = client.get("/api/parts/EL-5")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "missing"
+    assert response.json()["description"] is None
+    assert response.json()["revision"] is None
+
+
+def test_paths(client):
+    response = client.get("/api/parts/FA-9/paths")
+
+    assert response.status_code == 200
+
+    assert response.json() == {
+        "part_number": "FA-9",
+        "paths": [
+            ["AS-40000", "AS-1", "FA-9"],
+            ["AS-40000", "FA-9"],
+        ],
+    }
+
+
+def test_serial(client):
+    response = client.get("/api/serial/1000")
+
+    assert response.status_code == 200
+
+    assert response.json() == {
+        "serial": 1000,
+        "applicable_parts": 2,
     }
 
 
 @pytest.mark.parametrize(
-    "invalid_serial",
+    "invalid",
     ["abc", "12.5", "-10", "+10", "1e3"]
 )
-def test_invalid_serial(invalid_serial):
-    response = client.get(
-        f"/api/serial/{invalid_serial}"
-    )
+def test_bad_serial_returns_4xx(client, invalid):
+    response = client.get(f"/api/serial/{invalid}")
 
     assert 400 <= response.status_code < 500
 
 
-def test_homepage():
+@pytest.mark.parametrize(
+    "url",
+    [
+        "/api/parts/OUT-1",
+        "/api/parts/UNKNOWN-999",
+        "/api/parts/OUT-1/paths",
+    ]
+)
+def test_missing_part_returns_404(client, url):
+    assert client.get(url).status_code == 404
+
+
+def test_homepage(client):
     response = client.get("/")
 
     assert response.status_code == 200
